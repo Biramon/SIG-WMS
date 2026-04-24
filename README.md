@@ -13,7 +13,7 @@ O **SIG-WMS** é uma aplicação web Full Stack desenvolvida para simplificar e 
 Diferente de um controle de estoque estático, este sistema atua como um verdadeiro WMS (Warehouse Management System), garantindo a rastreabilidade das movimentações, controle de saldos em tempo real e, futuramente, gestão inteligente de lotes e endereçamento logístico.
 
 ### 📚 Contexto Acadêmico
-Este projeto está sendo desenvolvido como requisito de avaliação da disciplina de **DIM0510 - PROCESSOS DE SOFTWARE**. A gestão de tarefas, Sprints e Backlog do Produto está sendo conduzida utilizando metodologias ágeis (Kanban) através do **GitHub Projects[https://github.com/users/Biramon/projects/3/views/1]**.
+Este projeto está sendo desenvolvido como requisito de avaliação da disciplina de **DIM0510 - PROCESSOS DE SOFTWARE**. A gestão de tarefas, Sprints e Backlog do Produto está sendo conduzida utilizando metodologias ágeis (Kanban) através do **[GitHub Projects[(https://github.com/users/Biramon/projects/3/views/1)**.
 
 ---
 
