@@ -24,6 +24,8 @@ public class Product extends AbstractModel {
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;
 
-    private Integer saldo;
+    @Enumerated(EnumType.STRING)
+    private TipoProduto tipoProduto;
 
+    private Integer saldo;
 }
