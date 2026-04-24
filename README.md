@@ -13,7 +13,7 @@ O **SIG-WMS** é uma aplicação web Full Stack desenvolvida para simplificar e 
 Diferente de um controle de estoque estático, este sistema atua como um verdadeiro WMS (Warehouse Management System), garantindo a rastreabilidade das movimentações, controle de saldos em tempo real e, futuramente, gestão inteligente de lotes e endereçamento logístico.
 
 ### 📚 Contexto Acadêmico
-Este projeto está sendo desenvolvido como requisito de avaliação da disciplina de **DIM0510 - PROCESSOS DE SOFTWARE**. A gestão de tarefas, Sprints e Backlog do Produto está sendo conduzida utilizando metodologias ágeis (Kanban) através do **[GitHub Projects[(https://github.com/users/Biramon/projects/3/views/1)**.
+Este projeto está sendo desenvolvido como requisito de avaliação da disciplina de **DIM0510 - PROCESSOS DE SOFTWARE**. A gestão de tarefas, Sprints e Backlog do Produto está sendo conduzida utilizando metodologias ágeis (Kanban) através do **[GitHub Projects](https://github.com/users/Biramon/projects/3/views/1)**.
 
 ---
 
@@ -34,3 +34,21 @@ A aplicação é dividida em dois blocos principais, comunicando-se via API REST
 * **Front-end:** React.js + Vite (com Axios e React Router).
 * **Banco de Dados:** PostgreSQL 16 (Conteinerizado).
 * **Infraestrutura:** Docker e Docker Compose para padronização do ambiente local.
+
+---
+
+## 🔄 Retrospectiva da Sprint 1
+
+### O que funcionou bem
+- Boa separação de responsabilidades no sistema e na equipe  
+- Escolha adequada das tecnologias, sem bloqueios técnicos  
+- Fluidez na comunicação e colaboração do time  
+- Escopo bem definido na Sprint 0, o que facilitou a reorganização diante da mudança de projeto  
+
+### O que não funcionou bem
+- Mudança de projeto impactou o andamento da sprint, gerando retrabalho e necessidade de reorganização  
+
+### O que pode ser melhorado
+- Melhor avaliação de riscos externos, identificando dependências já no planejamento  
+- Definição de estratégias para reaproveitamento de artefatos do projeto  
+- Planejamento mais flexível, com entregas menores e adaptáveis a mudanças  
