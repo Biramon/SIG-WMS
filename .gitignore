@@ -59,3 +59,33 @@ replay_pid*
 
 # Environment
 .env
+
+# ============================================
+# Frontend (Vite + React/TypeScript)
+# ============================================
+
+# Dependencies
+frontend/node_modules/
+
+# Build output
+frontend/dist/
+frontend/build/
+
+# Vite/Build cache
+frontend/.vite/
+
+# Environment variables (frontend-specific)
+frontend/.env
+frontend/.env.example
+frontend/.env.local
+frontend/.env.development
+frontend/.env.production
+frontend/.env.*.local
+
+# Editor directories
+frontend/.vscode/
+frontend/.idea/
+
+# OS files in frontend
+frontend/DS_Store
+frontend/Thumbs.db
