@@ -38,6 +38,7 @@ jobs:
       - name: Build and Test backend
         run: mvn -f api/pom.xml clean package --batch-mode
         env:
+          APP_PORT: 8080
           DB_HOST: localhost
           DB_PORT: 5432
           DB_NAME: sigwms_test
