@@ -32,7 +32,7 @@ public class ProductService {
     }
 
     //Método para gerar o SKU
-    public String generate(Product product) {
+    private String generate(Product product) {
         String tipo = product.getTipoProduto().name().substring(0, Math.min(4, product.getTipoProduto().name().length()));
         String nomeAbrev = product.getNome().trim().toUpperCase()
                 .replaceAll("[^A-Z0-9]", "")
