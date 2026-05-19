@@ -5,7 +5,7 @@ function Home() {
     <div className="">
       <h1>SIG-WMS</h1>
       <Navbar/>
-      <p>Sistema de Gestão de Armazenamento</p>
+      <p>Sistema de Gestão de Armazenamento!</p>
     </div>
   );
 }

@@ -4,4 +4,5 @@ public class AlreadyExistsException extends BusinessException {
     super("already.exists", args);
   }
 
+
 }
