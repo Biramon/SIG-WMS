@@ -9,7 +9,6 @@ on:
 jobs:
   backend:
     runs-on: ubuntu-latest
-
     # 1. SOBE O BANCO DE TESTES (Exigência para o Spring Boot passar nos testes)
     services:
       postgres-test:
