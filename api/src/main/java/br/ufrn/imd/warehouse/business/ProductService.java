@@ -1,7 +1,6 @@
 package br.ufrn.imd.warehouse.business;
 
 import br.ufrn.imd.warehouse.domain.entities.Product;
-import br.ufrn.imd.warehouse.domain.entities.TipoProduto;
 import br.ufrn.imd.warehouse.exceptions.NotFoundException;
 import br.ufrn.imd.warehouse.persistence.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ public class ProductService {
 
     public Product cadastrar(Product product) {
         product.setSku(generate(product));
+        product.setSaldo(0);
         return productRepository.save(product);
     }
 
@@ -27,8 +27,8 @@ public class ProductService {
         return product;
     }
 
-    public void delete(Long id){
-        productRepository.delete(id);
+    public void desativar(Long id){
+        productRepository.desativar(id);
     }
 
     //Método para gerar o SKU
