@@ -21,5 +21,5 @@ public interface AbstractRepository<T extends AbstractModel> extends JpaReposito
     @Modifying
     @Transactional
     @Query("UPDATE #{#entityName} e SET e.ativo = false WHERE e.id = :id")
-    void delete(Long id);
+    void desativar(Long id);
 }

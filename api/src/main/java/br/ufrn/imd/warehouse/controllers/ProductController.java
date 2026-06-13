@@ -36,9 +36,9 @@ public class ProductController {
         return ResponseEntity.ok(productConverter.toDto(product));
     }
 
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<MessageDto> deletar(@PathVariable Long id) {
-        productService.delete(id);
+    @DeleteMapping("/desativar/{id}")
+    public ResponseEntity<MessageDto> desativar(@PathVariable Long id) {
+        productService.desativar(id);
         return ResponseEntity.ok(messageUtils.getMessage("success.deleted", "Produto"));
     }
 
