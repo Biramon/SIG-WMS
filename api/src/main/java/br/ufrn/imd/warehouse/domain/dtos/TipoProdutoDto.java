@@ -1,14 +1,11 @@
 package br.ufrn.imd.warehouse.domain.dtos;
 
-import br.ufrn.imd.warehouse.domain.entities.TipoProduto;
+import java.time.LocalDateTime;
+import java.util.List;
 
-public record TipoProdutoDto(String nome) {
-
-    public TipoProduto toEnum() {
-        return TipoProduto.valueOf(this.nome);
-    }
-
-    public static TipoProdutoDto fromEnum(TipoProduto tipo) {
-        return new TipoProdutoDto(tipo.name());
-    }
-}
+public record TipoProdutoDto(
+        Long id,
+        String denominacao,
+        List<ProductDto> produtos,
+        LocalDateTime createdAt
+) {}
