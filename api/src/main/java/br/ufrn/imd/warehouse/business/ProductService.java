@@ -33,10 +33,12 @@ public class ProductService {
 
     //Método para gerar o SKU
     private String generate(Product product) {
-        String tipo = product.getTipoProduto().getDenominacao().substring(0, Math.min(4, product.getTipoProduto().getDenominacao().length()));
-        String nomeAbrev = product.getNome().trim().toUpperCase()
-                .replaceAll("[^A-Z0-9]", "")
-                .substring(0, Math.min(4, product.getNome().trim().replaceAll("[^A-Za-z0-9]", "").length()));
+        String denominacao = product.getTipoProduto().getDenominacao().toUpperCase().replaceAll("[^A-Z0-9]", "");
+        String tipo = denominacao.substring(0, Math.min(4, denominacao.length()));
+
+        String nomeClean = product.getNome().trim().toUpperCase().replaceAll("[^A-Z0-9]", "");
+        String nomeAbrev = nomeClean.substring(0, Math.min(4, nomeClean.length()));
+
         String prefix = tipo + "-" + nomeAbrev + "-";
         String sequencial = String.format("%04d", productRepository.countBySkuStartingWith(prefix) + 1);
         return prefix + sequencial;
