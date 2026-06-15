@@ -1,8 +1,6 @@
 package br.ufrn.imd.warehouse.domain.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +22,8 @@ public class Product extends AbstractModel {
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "tipo_produto_id")
     private TipoProduto tipoProduto;
 
     private Integer saldo;

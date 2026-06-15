@@ -1,25 +1,25 @@
 package br.ufrn.imd.warehouse.domain.entities;
 
-public enum TipoProduto {
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-    ALIMENTO("Alimento"),
-    BEBIDA("Bebida"),
-    LIMPEZA("Limpeza"),
-    HIGIENE("Higiene"),
-    ELETRONICO("Eletrônico"),
-    VESTUARIO("Vestuário"),
-    MOVEL("Móvel"),
-    FERRAMENTA("Ferramenta"),
-    MEDICAMENTO("Medicamento"),
-    OUTRO("Outro");
+import java.util.ArrayList;
+import java.util.List;
 
-    private final String nome;
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class TipoProduto extends AbstractModel {
 
-    TipoProduto(String nome) {
-        this.nome = nome;
-    }
+    private String denominacao;
 
-    public String getNome() {
-        return nome;
-    }
+    @OneToMany(mappedBy = "tipoProduto")
+    private List<Product> produtos = new ArrayList<>();
+
 }
