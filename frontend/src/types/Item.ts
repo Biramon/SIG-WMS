@@ -4,4 +4,6 @@ export type Item = {
   name: string;
   quantity: number;
   price: number;
+  type: string;
+  active: boolean;
 };

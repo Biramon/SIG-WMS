@@ -17,7 +17,7 @@ export default function Stock({ items, setItems }: StockProps) {
       setItems(
         items.map((item) =>
           item.id === editingItem.id
-            ? { ...itemData, id: editingItem.id }
+            ? { ...item, ...itemData, active: item.active }
             : item,
         ),
       );
@@ -26,19 +26,18 @@ export default function Stock({ items, setItems }: StockProps) {
       const newItem: Item = {
         ...itemData,
         id: crypto.randomUUID(),
+        active: true,
       };
       setItems([...items, newItem]);
     }
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm("Tem certeza que deseja deletar este item?")) {
-      setItems(items.filter((item) => item.id !== id));
-
-      if (editingItem?.id === id) {
-        setEditingItem(null);
-      }
-    }
+  const handleToggle = (id: string) => {
+    setItems(
+      items.map((item) =>
+        item.id === id ? { ...item, active: !item.active } : item,
+      ),
+    );
   };
 
   return (
@@ -54,7 +53,7 @@ export default function Stock({ items, setItems }: StockProps) {
       <StockTable
         items={items}
         onEdit={(item) => setEditingItem(item)}
-        onDelete={handleDelete}
+        onToggle={handleToggle}
       />
     </div>
   );

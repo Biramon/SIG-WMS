@@ -7,6 +7,8 @@ interface StockFormProps {
   onCancel: () => void;
 }
 
+const TYPES = ["Tipo1", "Tipo2"];
+
 export default function StockForm({
   onSubmit,
   editingItem,
@@ -15,16 +17,19 @@ export default function StockForm({
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState<number | "">("");
   const [price, setPrice] = useState<number | "">("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     if (editingItem) {
       setName(editingItem.name);
       setQuantity(editingItem.quantity);
       setPrice(editingItem.price);
+      setType(editingItem.type);
     } else {
       setName("");
       setQuantity("");
       setPrice("");
+      setType("");
     }
   }, [editingItem]);
 
@@ -36,12 +41,15 @@ export default function StockForm({
       name,
       quantity: Number(quantity),
       price: Number(price),
+      type: type,
+      active: true,
     });
 
     if (!editingItem) {
       setName("");
       setQuantity("");
       setPrice("");
+      setType("");
     }
   };
 
@@ -64,6 +72,28 @@ export default function StockForm({
             onChange={(e) => setName(e.target.value)}
           />
         </div>
+
+        <div className="w-40">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Tipo do Produto
+          </label>
+          <select
+            required
+            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="" disabled>
+              Selecione...
+            </option>
+            {TYPES.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="w-32">
           <label className="block text-sm font-medium text-slate-700 mb-1">
             Quantidade

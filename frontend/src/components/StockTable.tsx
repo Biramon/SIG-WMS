@@ -4,10 +4,10 @@ import { StockTableRow } from "./StockTableRow";
 interface StockTableProps {
   items: Item[];
   onEdit: (item: Item) => void; // Adicionado
-  onDelete: (id: string) => void;
+  onToggle: (id: string) => void;
 }
 
-export function StockTable({ items, onEdit, onDelete }: StockTableProps) {
+export function StockTable({ items, onEdit, onToggle }: StockTableProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <table className="w-full text-left border-collapse">
@@ -16,7 +16,9 @@ export function StockTable({ items, onEdit, onDelete }: StockTableProps) {
             <th className="p-4 font-semibold">Produto</th>
             <th className="p-4 font-semibold">Qtd.</th>
             <th className="p-4 font-semibold">Preço Unitário</th>
+            <th className="p-4 font-semibold">Tipo</th>
             <th className="p-4 font-semibold text-right">Ações</th>
+            <th className="p-4 font-semibold text-right">Status</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-200">
@@ -32,7 +34,7 @@ export function StockTable({ items, onEdit, onDelete }: StockTableProps) {
                 key={item.id}
                 item={item}
                 onEdit={onEdit} // Repassando a função
-                onDelete={onDelete}
+                onToggle={onToggle}
               />
             ))
           )}

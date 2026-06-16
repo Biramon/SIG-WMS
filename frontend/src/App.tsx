@@ -12,9 +12,30 @@ import { Item } from "./types/Item";
 
 // --- DADOS MOCKUP ---
 var mockItems: Item[] = [
-  { id: "1", name: "Notebook Dell Inspiron", quantity: 15, price: 4500.0 },
-  { id: "2", name: 'Monitor LG 27"', quantity: 8, price: 1200.0 },
-  { id: "3", name: "Teclado Mecânico Keychron", quantity: 20, price: 650.0 },
+  {
+    id: "1",
+    name: "Notebook Dell Inspiron",
+    quantity: 15,
+    price: 4500.0,
+    type: "Tipo1",
+    active: true,
+  },
+  {
+    id: "2",
+    name: 'Monitor LG 27"',
+    quantity: 8,
+    price: 1200.0,
+    type: "Tipo1",
+    active: true,
+  },
+  {
+    id: "3",
+    name: "Teclado Mecânico Keychron",
+    quantity: 20,
+    price: 650.0,
+    type: "Tipo1",
+    active: true,
+  },
 ];
 
 export default function App() {
