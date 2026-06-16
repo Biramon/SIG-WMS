@@ -4,6 +4,9 @@ import br.ufrn.imd.warehouse.domain.entities.TipoProduto;
 import br.ufrn.imd.warehouse.exceptions.AlreadyExistsException;
 import br.ufrn.imd.warehouse.exceptions.BusinessException;
 import br.ufrn.imd.warehouse.persistence.TipoProdutoRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,14 @@ public class TipoProdutoService {
         }
 
         return tipoProdutoRepository.save(tipoProduto);
+    }
+
+    public List<TipoProduto> listar() {
+        return tipoProdutoRepository.findAll();
+    }
+
+    public List<TipoProduto> listarOrdenado() {
+        return tipoProdutoRepository.findAllByOrderByDenominacaoAsc();
     }
 
 }
