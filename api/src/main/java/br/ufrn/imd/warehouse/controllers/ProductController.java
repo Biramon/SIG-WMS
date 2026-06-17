@@ -6,6 +6,9 @@ import br.ufrn.imd.warehouse.domain.converters.ProductConverter;
 import br.ufrn.imd.warehouse.domain.dtos.MessageDto;
 import br.ufrn.imd.warehouse.domain.dtos.ProductDto;
 import br.ufrn.imd.warehouse.domain.entities.Product;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +43,12 @@ public class ProductController {
     public ResponseEntity<MessageDto> desativar(@PathVariable Long id) {
         productService.desativar(id);
         return ResponseEntity.ok(messageUtils.getMessage("success.deleted", "Produto"));
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<ProductDto>> listar() {
+        List<Product> products = productService.listar();
+        return ResponseEntity.ok(productConverter.toListDto(products));
     }
 
 }
