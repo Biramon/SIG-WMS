@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Stock from "./pages/Stock";
 import { useState } from "react";
 import { Item } from "./types/Item";
+import ProductTypes from "./pages/ProductTypes";
 
 // --- DADOS MOCKUP ---
 var mockItems: Item[] = [
@@ -72,6 +73,18 @@ export default function App() {
             >
               Gerenciar Estoque
             </NavLink>
+            <NavLink
+              to="/product-types"
+              className={({ isActive }) =>
+                `block w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                  isActive
+                    ? "bg-blue-600 text-white"
+                    : "text-slate-300 hover:bg-slate-800"
+                }`
+              }
+            >
+              Tipos de Produto
+            </NavLink>
           </nav>
         </aside>
 
@@ -83,6 +96,7 @@ export default function App() {
               path="/estoque"
               element={<Stock items={items} setItems={setItems} />}
             />
+            <Route path="/product-types" element={<ProductTypes />} />
           </Routes>
         </main>
       </div>
