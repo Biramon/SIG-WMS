@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import type { Item } from "../types/Item";
+import { useProductTypes } from "../context/ProductTypesContext";
 
 interface StockFormProps {
   onSubmit: (itemData: Omit<Item, "id">) => void;
   editingItem: Item | null;
   onCancel: () => void;
 }
-
-const TYPES = ["Tipo1", "Tipo2"];
 
 export default function StockForm({
   onSubmit,
@@ -18,6 +17,8 @@ export default function StockForm({
   const [quantity, setQuantity] = useState<number | "">("");
   const [price, setPrice] = useState<number | "">("");
   const [type, setType] = useState("");
+
+  const { productTypes, loading } = useProductTypes();
 
   useEffect(() => {
     if (editingItem) {
@@ -79,18 +80,25 @@ export default function StockForm({
           </label>
           <select
             required
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+            disabled={loading}
+            className={`w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white ${
+              loading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
             <option value="" disabled>
-              Selecione...
+              {loading ? "Carregando..." : "Selecione..."}
             </option>
-            {TYPES.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
+
+            {!loading &&
+              productTypes
+                .filter((productType) => productType.active === true)
+                .map((productType) => (
+                  <option key={productType.id} value={productType.id}>
+                    {productType.name}
+                  </option>
+                ))}
           </select>
         </div>
 

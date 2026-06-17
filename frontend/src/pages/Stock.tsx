@@ -3,42 +3,39 @@ import type { Item } from "../types/Item";
 import { StockHeader } from "../components/StockHeader";
 import StockForm from "../components/StockForm";
 import { StockTable } from "../components/StockTable";
+import { useProdutos } from "@/context/ProductContext";
 
-interface StockProps {
-  items: Item[];
-  setItems: React.Dispatch<React.SetStateAction<Item[]>>;
-}
-
-export default function Stock({ items, setItems }: StockProps) {
+export default function Stock() {
   const [editingItem, setEditingItem] = useState<Item | null>(null);
 
-  const handleSubmitForm = (itemData: Omit<Item, "id">) => {
+  const { produtos, loading, error, addProduto, editProduto } = useProdutos();
+
+  const handleSubmitForm = async (itemData: Omit<Item, "id">) => {
     if (editingItem) {
-      setItems(
-        items.map((item) =>
-          item.id === editingItem.id
-            ? { ...item, ...itemData, active: item.active }
-            : item,
-        ),
-      );
+      await editProduto(editingItem.id, {
+        ...itemData,
+        active: editingItem.active,
+      });
       setEditingItem(null);
     } else {
-      const newItem: Item = {
+      await addProduto({
         ...itemData,
-        id: crypto.randomUUID(),
         active: true,
-      };
-      setItems([...items, newItem]);
+      });
     }
   };
 
-  const handleToggle = (id: string) => {
-    setItems(
-      items.map((item) =>
-        item.id === id ? { ...item, active: !item.active } : item,
-      ),
-    );
+  const handleToggle = async (id: string) => {
+    const itemAtual = produtos.find((item) => item.id === id);
+    if (itemAtual) {
+      await editProduto(id, { active: !itemAtual.active });
+    }
   };
+
+  if (loading && produtos.length === 0)
+    return <div className="text-center py-10">Carregando estoque...</div>;
+  if (error)
+    return <div className="text-center py-10 text-red-500">Erro: {error}</div>;
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -51,7 +48,7 @@ export default function Stock({ items, setItems }: StockProps) {
       />
 
       <StockTable
-        items={items}
+        items={produtos}
         onEdit={(item) => setEditingItem(item)}
         onToggle={handleToggle}
       />

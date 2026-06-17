@@ -7,40 +7,13 @@ import {
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Stock from "./pages/Stock";
-import { useState } from "react";
-import { Item } from "./types/Item";
+//import { useState } from "react";
 import ProductTypes from "./pages/ProductTypes";
 
-// --- DADOS MOCKUP ---
-var mockItems: Item[] = [
-  {
-    id: "1",
-    name: "Notebook Dell Inspiron",
-    quantity: 15,
-    price: 4500.0,
-    type: "Tipo1",
-    active: true,
-  },
-  {
-    id: "2",
-    name: 'Monitor LG 27"',
-    quantity: 8,
-    price: 1200.0,
-    type: "Tipo1",
-    active: true,
-  },
-  {
-    id: "3",
-    name: "Teclado Mecânico Keychron",
-    quantity: 20,
-    price: 650.0,
-    type: "Tipo1",
-    active: true,
-  },
-];
+import { ProdutosProvider } from "./context/ProductContext";
+import { ProductTypesProvider } from "./context/ProductTypesContext";
 
 export default function App() {
-  const [items, setItems] = useState<Item[]>(mockItems);
   return (
     <BrowserRouter>
       <div className="flex h-screen bg-gray-50 font-sans text-gray-900">
@@ -94,9 +67,22 @@ export default function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/estoque"
-              element={<Stock items={items} setItems={setItems} />}
+              element={
+                <ProdutosProvider>
+                  <ProductTypesProvider>
+                    <Stock />
+                  </ProductTypesProvider>
+                </ProdutosProvider>
+              }
             />
-            <Route path="/product-types" element={<ProductTypes />} />
+            <Route
+              path="/product-types"
+              element={
+                <ProductTypesProvider>
+                  <ProductTypes />
+                </ProductTypesProvider>
+              }
+            />
           </Routes>
         </main>
       </div>

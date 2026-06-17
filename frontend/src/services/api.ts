@@ -1,80 +1,70 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { Item } from "@/types/Item";
+import { ProductType } from "@/types/ProductType";
 
-const baseURL = import.meta.env.VITE_API_URL || '/api';
-
-export const api = axios.create({
-  baseURL,
-  timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
+// Mocks iniciais
+const initialItems: Item[] = [
+  {
+    id: "1",
+    name: "Notebook Dell Inspiron",
+    quantity: 15,
+    price: 4500.0,
+    type: "Tipo1",
+    active: true,
   },
-});
+  {
+    id: "2",
+    name: 'Monitor LG 27"',
+    quantity: 8,
+    price: 1200.0,
+    type: "Tipo1",
+    active: true,
+  },
+  {
+    id: "3",
+    name: "Teclado Mecânico Keychron",
+    quantity: 20,
+    price: 650.0,
+    type: "Tipo1",
+    active: true,
+  },
+];
 
-// Request interceptor
-api.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+const initialProductTypes: ProductType[] = [
+  { id: "1", name: "Eletrodoméstico", active: true },
+  { id: "2", name: "Eletrônicos", active: true },
+  { id: "3", name: "Vestuário", active: false },
+];
+
+// Chaves no LocalStorage
+const ITEMS_KEY = "@app:items";
+const TYPES_KEY = "@app:product_types";
+
+export const StorageService = {
+  // --- MÉTODOS PARA PRODUTOS (ITEMS) ---
+  getItems: (): Item[] => {
+    const data = localStorage.getItem(ITEMS_KEY);
+    if (!data) {
+      localStorage.setItem(ITEMS_KEY, JSON.stringify(initialItems));
+      return initialItems;
     }
-    return config;
+    return JSON.parse(data);
   },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
 
-// Response interceptor
-api.interceptors.response.use(
-  (response: AxiosResponse) => {
-    return response;
+  saveItems: (items: Item[]): void => {
+    localStorage.setItem(ITEMS_KEY, JSON.stringify(items));
   },
-  (error: AxiosError) => {
-    if (error.response) {
-      const status = error.response.status;
 
-      switch (status) {
-        case 401:
-          localStorage.removeItem('authToken');
-          window.location.href = '/login';
-          break;
-        case 403:
-          console.error('Acesso negado');
-          break;
-        case 404:
-          console.error('Recurso não encontrado');
-          break;
-        case 500:
-          console.error('Erro interno do servidor');
-          break;
-        default:
-          break;
-      }
-    } else if (error.request) {
-      console.error('Erro de conexão: Não foi possível conectar ao servidor');
-    } else {
-      console.error('Erro ao processar requisição');
+  // --- MÉTODOS PARA TIPOS DE PRODUTOS ---
+  getProductTypes: (): ProductType[] => {
+    const data = localStorage.getItem(TYPES_KEY);
+    if (!data) {
+      localStorage.setItem(TYPES_KEY, JSON.stringify(initialProductTypes));
+      return initialProductTypes;
     }
+    return JSON.parse(data);
+  },
 
-    return Promise.reject(error);
-  }
-);
-
-// API methods helper
-export const apiGet = <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
-  return api.get<T>(url, config);
+  saveProductTypes: (types: ProductType[]): void => {
+    localStorage.setItem(TYPES_KEY, JSON.stringify(types));
+  },
 };
-
-export const apiPost = <T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
-  return api.post<T>(url, data, config);
-};
-
-export const apiPut = <T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
-  return api.put<T>(url, data, config);
-};
-
-export const apiDelete = <T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> => {
-  return api.delete<T>(url, config);
-};
-
-export default api;
