@@ -30,7 +30,7 @@ export default function ProductTypes() {
     }
   };
 
-  const handleRemoveType = async (id: string) => {};
+  const handleRemoveType = async () => {};
 
   if (loading && productTypes.length === 0)
     return <div className="text-center py-10">Carregando categorias...</div>;

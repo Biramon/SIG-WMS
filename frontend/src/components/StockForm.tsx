@@ -18,7 +18,7 @@ export default function StockForm({
   const [price, setPrice] = useState<number | "">("");
   const [type, setType] = useState("");
 
-  const { productTypes, loading, error } = useProductTypes();
+  const { productTypes, loading } = useProductTypes();
 
   useEffect(() => {
     if (editingItem) {
@@ -80,20 +80,25 @@ export default function StockForm({
           </label>
           <select
             required
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+            disabled={loading}
+            className={`w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white ${
+              loading ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             value={type}
             onChange={(e) => setType(e.target.value)}
           >
             <option value="" disabled>
-              Selecione...
+              {loading ? "Carregando..." : "Selecione..."}
             </option>
-            {productTypes
-              .filter((productType) => productType.active === true)
-              .map((productType) => (
-                <option key={productType.id} value={productType.id}>
-                  {productType.name}
-                </option>
-              ))}
+
+            {!loading &&
+              productTypes
+                .filter((productType) => productType.active === true)
+                .map((productType) => (
+                  <option key={productType.id} value={productType.id}>
+                    {productType.name}
+                  </option>
+                ))}
           </select>
         </div>
 
