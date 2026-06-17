@@ -3,7 +3,7 @@ import { StockTableRow } from "./StockTableRow";
 
 interface StockTableProps {
   items: Item[];
-  onEdit: (item: Item) => void; // Adicionado
+  onEdit: (item: Item) => void;
   onToggle: (id: string) => void;
 }
 
@@ -33,7 +33,7 @@ export function StockTable({ items, onEdit, onToggle }: StockTableProps) {
               <StockTableRow
                 key={item.id}
                 item={item}
-                onEdit={onEdit} // Repassando a função
+                onEdit={onEdit}
                 onToggle={onToggle}
               />
             ))

@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import type { Item } from "../types/Item";
+import { useProductTypes } from "../api/ProductTypesContext";
 
 interface StockFormProps {
   onSubmit: (itemData: Omit<Item, "id">) => void;
   editingItem: Item | null;
   onCancel: () => void;
 }
-
-const TYPES = ["Tipo1", "Tipo2"];
 
 export default function StockForm({
   onSubmit,
@@ -18,6 +17,8 @@ export default function StockForm({
   const [quantity, setQuantity] = useState<number | "">("");
   const [price, setPrice] = useState<number | "">("");
   const [type, setType] = useState("");
+
+  const { productTypes, loading, error } = useProductTypes();
 
   useEffect(() => {
     if (editingItem) {
@@ -86,9 +87,9 @@ export default function StockForm({
             <option value="" disabled>
               Selecione...
             </option>
-            {TYPES.map((type) => (
-              <option key={type} value={type}>
-                {type}
+            {productTypes.map((productType) => (
+              <option key={productType.id} value={productType.id}>
+                {productType.name}
               </option>
             ))}
           </select>

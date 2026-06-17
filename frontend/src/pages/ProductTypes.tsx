@@ -3,44 +3,39 @@ import type { ProductType } from "../types/ProductType";
 import ProductTypesForm from "../components/ProductTypesForm";
 import { ProductTypesHeader } from "../components/ProductTypesHeader";
 import { ProductTypesTable } from "../components/ProductTypesTable";
+import { useProductTypes } from "../api/ProductTypesContext";
 
 export default function ProductTypes() {
-  const [types, setTypes] = useState<ProductType[]>([
-    { id: "1", name: "Eletrodoméstico", active: true },
-    { id: "2", name: "Eletrônicos", active: true },
-    { id: "3", name: "Vestuário", active: false },
-  ]);
-
   const [editingType, setEditingType] = useState<ProductType | null>(null);
 
-  const handleFormSubmit = (formData: Omit<ProductType, "id">) => {
+  const { productTypes, loading, error, addProductType, editProductType } =
+    useProductTypes();
+
+  const handleFormSubmit = async (formData: Omit<ProductType, "id">) => {
     if (editingType) {
-      setTypes(
-        types.map((type) =>
-          type.id === editingType.id ? { ...type, ...formData } : type,
-        ),
-      );
+      await editProductType(editingType.id, formData);
       setEditingType(null);
     } else {
-      const newType: ProductType = {
-        id: crypto.randomUUID(),
+      await addProductType({
         ...formData,
-      };
-      setTypes([...types, newType]);
+        active: true,
+      });
     }
   };
 
-  const handleToggleActive = (id: string) => {
-    setTypes(
-      types.map((type) =>
-        type.id === id ? { ...type, active: !type.active } : type,
-      ),
-    );
+  const handleToggleActive = async (id: string) => {
+    const targetType = productTypes.find((type) => type.id === id);
+    if (targetType) {
+      await editProductType(id, { active: !targetType.active });
+    }
   };
 
-  const handleRemoveType = (id: string) => {
-    setTypes(types.filter((type) => type.id !== id));
-  };
+  const handleRemoveType = async (id: string) => {};
+
+  if (loading && productTypes.length === 0)
+    return <div className="text-center py-10">Carregando categorias...</div>;
+  if (error)
+    return <div className="text-center py-10 text-red-500">Erro: {error}</div>;
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -51,8 +46,9 @@ export default function ProductTypes() {
         editingType={editingType}
         onCancel={() => setEditingType(null)}
       />
+
       <ProductTypesTable
-        types={types}
+        types={productTypes}
         onEdit={setEditingType}
         onToggle={handleToggleActive}
         onRemove={handleRemoveType}
