@@ -43,19 +43,7 @@ public class TipoProdutoController {
     @GetMapping("/listar")
     public ResponseEntity<List<TipoProdutoDto>> listar() {
         List<TipoProduto> tiposProduto = tipoProdutoService.listar();
-        List<TipoProdutoDto> tiposProdutoDto = tiposProduto.stream()
-                .map(tipoProdutoConverter::toDto)
-                .collect(Collectors.toList());
+        List<TipoProdutoDto> tiposProdutoDto = tipoProdutoConverter.toListDto(tiposProduto);
         return ResponseEntity.ok(tiposProdutoDto);
     }
-    
-    @GetMapping("/listarordenado")
-    public ResponseEntity<List<TipoProdutoDto>> listarOrdenado() {
-        List<TipoProduto> tiposProduto = tipoProdutoService.listarOrdenado();
-        List<TipoProdutoDto> tiposProdutoDto = tiposProduto.stream()
-                .map(tipoProdutoConverter::toDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(tiposProdutoDto);
-    }
-
 }

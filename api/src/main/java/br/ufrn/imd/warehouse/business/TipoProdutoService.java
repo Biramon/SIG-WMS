@@ -28,9 +28,5 @@ public class TipoProdutoService {
     public List<TipoProduto> listar() {
         return tipoProdutoRepository.findAll();
     }
-
-    public List<TipoProduto> listarOrdenado() {
-        return tipoProdutoRepository.findAllByOrderByDenominacaoAsc();
-    }
-
+    
 }
