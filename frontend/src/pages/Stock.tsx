@@ -3,7 +3,7 @@ import type { Item } from "../types/Item";
 import { StockHeader } from "../components/StockHeader";
 import StockForm from "../components/StockForm";
 import { StockTable } from "../components/StockTable";
-import { useProdutos } from "@/api/ProductContext";
+import { useProdutos } from "@/context/ProductContext";
 
 export default function Stock() {
   const [editingItem, setEditingItem] = useState<Item | null>(null);

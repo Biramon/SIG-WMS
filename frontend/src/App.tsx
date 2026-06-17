@@ -10,8 +10,8 @@ import Stock from "./pages/Stock";
 //import { useState } from "react";
 import ProductTypes from "./pages/ProductTypes";
 
-import { ProdutosProvider } from "./api/ProductContext";
-import { ProductTypesProvider } from "./api/ProductTypesContext";
+import { ProdutosProvider } from "./context/ProductContext";
+import { ProductTypesProvider } from "./context/ProductTypesContext";
 
 export default function App() {
   return (

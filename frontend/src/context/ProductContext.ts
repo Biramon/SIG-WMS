@@ -6,33 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { Item } from "../types/Item";
-
-const mockItems: Item[] = [
-  {
-    id: "1",
-    name: "Notebook Dell Inspiron",
-    quantity: 15,
-    price: 4500.0,
-    type: "Tipo1",
-    active: true,
-  },
-  {
-    id: "2",
-    name: 'Monitor LG 27"',
-    quantity: 8,
-    price: 1200.0,
-    type: "Tipo1",
-    active: true,
-  },
-  {
-    id: "3",
-    name: "Teclado Mecânico Keychron",
-    quantity: 20,
-    price: 650.0,
-    type: "Tipo1",
-    active: true,
-  },
-];
+import { StorageService } from "../services/api";
 
 interface ProdutosContextType {
   produtos: Item[];
@@ -52,58 +26,61 @@ export const ProdutosProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Simula GET
-  const fetchProdutosSimulado = async () => {
+  const fetchProdutos = async () => {
     try {
       setLoading(true);
-      //await new Promise((resolve) => setTimeout(resolve, 500));
-      setProdutos((prev) => (prev.length === 0 ? mockItems : prev));
+
+      const dadosDoArquivo = StorageService.getItems();
+      setProdutos(dadosDoArquivo);
     } catch {
-      setError("Falha ao carregar produtos.");
+      setError("Falha ao ler o arquivo de produtos.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Simula POST
   const addProduto = async (novoItem: Omit<Item, "id">) => {
     try {
       setLoading(true);
-      //await new Promise((resolve) => setTimeout(resolve, 600));
+      const dadosAtuais = StorageService.getItems();
 
       const itemComId: Item = {
         ...novoItem,
         id: crypto.randomUUID(),
       };
 
-      setProdutos((produtosAtuais) => [...produtosAtuais, itemComId]);
+      const novaLista = [...dadosAtuais, itemComId];
+
+      StorageService.saveItems(novaLista);
+
+      setProdutos(novaLista);
     } catch {
-      setError("Erro ao adicionar produto.");
+      setError("Erro ao salvar o produto no arquivo.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Simula PUT
   const editProduto = async (id: string, itemAtualizado: Partial<Item>) => {
     try {
       setLoading(true);
-      //await new Promise((resolve) => setTimeout(resolve, 600));
+      const dadosAtuais = StorageService.getItems();
 
-      setProdutos((produtosAtuais) =>
-        produtosAtuais.map((item) =>
-          item.id === id ? { ...item, ...itemAtualizado } : item,
-        ),
+      const novaLista = dadosAtuais.map((item) =>
+        item.id === id ? { ...item, ...itemAtualizado } : item,
       );
+
+      StorageService.saveItems(novaLista);
+      setProdutos(novaLista);
     } catch {
-      setError("Erro ao editar produto.");
+      setError("Erro ao editar o arquivo de produtos.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProdutosSimulado();
+    fetchProdutos();
   }, []);
 
   return React.createElement(
@@ -113,7 +90,7 @@ export const ProdutosProvider = ({ children }: { children: ReactNode }) => {
         produtos,
         loading,
         error,
-        refetchProdutos: fetchProdutosSimulado,
+        refetchProdutos: fetchProdutos,
         addProduto,
         editProduto,
       },

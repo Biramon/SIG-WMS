@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Item } from "../types/Item";
-import { useProductTypes } from "../api/ProductTypesContext";
+import { useProductTypes } from "../context/ProductTypesContext";
 
 interface StockFormProps {
   onSubmit: (itemData: Omit<Item, "id">) => void;
@@ -87,11 +87,13 @@ export default function StockForm({
             <option value="" disabled>
               Selecione...
             </option>
-            {productTypes.map((productType) => (
-              <option key={productType.id} value={productType.id}>
-                {productType.name}
-              </option>
-            ))}
+            {productTypes
+              .filter((productType) => productType.active === true)
+              .map((productType) => (
+                <option key={productType.id} value={productType.id}>
+                  {productType.name}
+                </option>
+              ))}
           </select>
         </div>
 

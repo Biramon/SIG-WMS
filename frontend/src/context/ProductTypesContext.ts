@@ -5,13 +5,8 @@ import React, {
   useContext,
   ReactNode,
 } from "react";
-import { ProductType } from "../types/ProductType";
-
-var mockProductTypes: ProductType[] = [
-  { id: "1", name: "Eletrodoméstico", active: true },
-  { id: "2", name: "Eletrônicos", active: true },
-  { id: "3", name: "Vestuário", active: false },
-];
+import { ProductType } from "@/types/ProductType";
+import { StorageService } from "../services/api";
 
 interface ProductTypesContextType {
   productTypes: ProductType[];
@@ -34,58 +29,61 @@ export const ProductTypesProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Simula GET
-  const fetchProductTypesSimulado = async () => {
+  const fetchProductTypes = async () => {
     try {
       setLoading(true);
-      setProductTypes((prev) => (prev.length === 0 ? mockProductTypes : prev));
+      const dadosDoArquivo = StorageService.getProductTypes();
+      setProductTypes(dadosDoArquivo);
     } catch {
-      setError("Falha ao carregar tipos de produto.");
+      setError("Falha ao ler o arquivo de categorias.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Simula POST
   const addProductType = async (novoType: Omit<ProductType, "id">) => {
     try {
       setLoading(true);
+      const dadosAtuais = StorageService.getProductTypes();
 
       const typeComId: ProductType = {
         ...novoType,
-        id: crypto.randomUUID(), //ID aleatorio
+        id: crypto.randomUUID(),
       };
 
-      setProductTypes((typesAtuais) => [...typesAtuais, typeComId]);
+      const novaLista = [...dadosAtuais, typeComId];
+      StorageService.saveProductTypes(novaLista);
+      setProductTypes(novaLista);
     } catch {
-      setError("Erro ao adicionar tipo de produto.");
+      setError("Erro ao salvar categoria no arquivo.");
     } finally {
       setLoading(false);
     }
   };
 
-  // Simula PUT
   const editProductType = async (
     id: string,
     typeAtualizado: Partial<ProductType>,
   ) => {
     try {
       setLoading(true);
+      const dadosAtuais = StorageService.getProductTypes();
 
-      setProductTypes((typesAtuais) =>
-        typesAtuais.map((type) =>
-          type.id === id ? { ...type, ...typeAtualizado } : type,
-        ),
+      const novaLista = dadosAtuais.map((type) =>
+        type.id === id ? { ...type, ...typeAtualizado } : type,
       );
+
+      StorageService.saveProductTypes(novaLista);
+      setProductTypes(novaLista);
     } catch {
-      setError("Erro ao editar tipo de produto.");
+      setError("Erro ao editar arquivo de categorias.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProductTypesSimulado();
+    fetchProductTypes();
   }, []);
 
   return React.createElement(
@@ -95,7 +93,7 @@ export const ProductTypesProvider = ({ children }: { children: ReactNode }) => {
         productTypes,
         loading,
         error,
-        refetchProductTypes: fetchProductTypesSimulado,
+        refetchProductTypes: fetchProductTypes,
         addProductType,
         editProductType,
       },

@@ -3,7 +3,7 @@ import type { ProductType } from "../types/ProductType";
 import ProductTypesForm from "../components/ProductTypesForm";
 import { ProductTypesHeader } from "../components/ProductTypesHeader";
 import { ProductTypesTable } from "../components/ProductTypesTable";
-import { useProductTypes } from "../api/ProductTypesContext";
+import { useProductTypes } from "../context/ProductTypesContext";
 
 export default function ProductTypes() {
   const [editingType, setEditingType] = useState<ProductType | null>(null);
