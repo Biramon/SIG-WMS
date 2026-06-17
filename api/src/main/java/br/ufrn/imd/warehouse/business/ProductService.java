@@ -3,6 +3,9 @@ package br.ufrn.imd.warehouse.business;
 import br.ufrn.imd.warehouse.domain.entities.Product;
 import br.ufrn.imd.warehouse.exceptions.NotFoundException;
 import br.ufrn.imd.warehouse.persistence.ProductRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +32,10 @@ public class ProductService {
 
     public void desativar(Long id){
         productRepository.desativar(id);
+    }
+
+    public List<Product> listar() {
+        return productRepository.findAll();
     }
 
     //Método para gerar o SKU
