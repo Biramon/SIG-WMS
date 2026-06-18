@@ -4,6 +4,7 @@ import {
   Route,
   NavLink,
   Navigate,
+  Link,
 } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Stock from "./pages/Stock";
@@ -16,11 +17,14 @@ import { ProductTypesProvider } from "./context/ProductTypesContext";
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="flex h-screen bg-gray-50 font-sans text-gray-900">
+      <div className="flex h-screen bg-gray-50 font-sans text-gray-900 select-none">
         <aside className="w-64 bg-slate-900 text-white flex flex-col shadow-xl">
-          <div className="p-6 text-2xl font-bold border-b border-slate-800 tracking-wider">
+          <Link
+            className="p-6 text-2xl font-bold border-b border-slate-800 tracking-wider cursor-pointer select-none"
+            to="/"
+          >
             📦 SIG-WMS
-          </div>
+          </Link>
           <nav className="flex-1 p-4 space-y-2">
             <NavLink
               to="/dashboard"

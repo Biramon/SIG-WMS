@@ -29,15 +29,15 @@ export function ProductTypesTable({ types, onEdit }: ProductTypesTableProps) {
           {types.map((type) => (
             <tr
               key={type.id}
-              className="hover:bg-slate-50/50 transition-colors"
+              className="hover:bg-slate-50/50 transition-colors select-text"
             >
               <td className="p-4 font-medium text-slate-800">{type.name}</td>
               <td className="p-4">
                 <button
-                  className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors ${
+                  className={`px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors cursor-default ${
                     type.status
-                      ? "bg-green-100 text-green-700 hover:bg-green-200"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-slate-100 text-slate-600"
                   }`}
                 >
                   {type.status ? "Ativo" : "Inativo"}
