@@ -26,11 +26,11 @@ public class ProductController {
     @Autowired
     private MessageUtils messageUtils;
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<MessageDto> cadastrar(@RequestBody ProductDto productDto) {
+    @PostMapping("/salvar")
+    public ResponseEntity<MessageDto> salvar(@RequestBody ProductDto productDto) {
         Product product = productConverter.toEntity(productDto);
-        productService.cadastrar(product);
-        return ResponseEntity.ok(messageUtils.getMessage("success.created", "Produto"));
+        productService.salvar(product);
+        return ResponseEntity.ok(messageUtils.getMessage("success.saved", "Produto"));
     }
 
     @GetMapping("/get/{id}")

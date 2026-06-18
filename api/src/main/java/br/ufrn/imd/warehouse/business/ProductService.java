@@ -15,9 +15,11 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Product cadastrar(Product product) {
-        product.setSku(generate(product));
-        product.setSaldo(0);
+    public Product salvar(Product product) {
+        if(product.getId() == null){
+            product.setSku(generate(product));
+            product.setSaldo(0);
+        }
         return productRepository.save(product);
     }
 
