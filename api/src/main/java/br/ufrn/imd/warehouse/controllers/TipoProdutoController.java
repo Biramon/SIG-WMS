@@ -4,7 +4,9 @@ import br.ufrn.imd.warehouse.business.MessageUtils;
 import br.ufrn.imd.warehouse.business.TipoProdutoService;
 import br.ufrn.imd.warehouse.domain.converters.TipoProdutoConverter;
 import br.ufrn.imd.warehouse.domain.dtos.MessageDto;
+import br.ufrn.imd.warehouse.domain.dtos.ProductDto;
 import br.ufrn.imd.warehouse.domain.dtos.TipoProdutoDto;
+import br.ufrn.imd.warehouse.domain.entities.Product;
 import br.ufrn.imd.warehouse.domain.entities.TipoProduto;
 
 import java.util.List;
@@ -12,12 +14,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -45,5 +42,17 @@ public class TipoProdutoController {
         List<TipoProduto> tiposProduto = tipoProdutoService.listar();
         List<TipoProdutoDto> tiposProdutoDto = tipoProdutoConverter.toListDto(tiposProduto);
         return ResponseEntity.ok(tiposProdutoDto);
+    }
+
+    @PatchMapping("/toggle-ativo/{id}")
+    public ResponseEntity<MessageDto> toggleAtivo(@PathVariable Long id) {
+        tipoProdutoService.toggleAtivo(id);
+        return ResponseEntity.ok(messageUtils.getMessage("success.updated", "Status do Tipo Produto"));
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<TipoProdutoDto> getById(@PathVariable Long id) {
+        TipoProduto tipoProduto = tipoProdutoService.getById(id);
+        return ResponseEntity.ok(tipoProdutoConverter.toDto(tipoProduto));
     }
 }

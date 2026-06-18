@@ -6,6 +6,7 @@ import br.ufrn.imd.warehouse.persistence.ProductRepository;
 
 import java.util.List;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,11 @@ public class ProductService {
 
     public List<Product> listar() {
         return productRepository.findAll();
+    }
+
+    @Transactional
+    public void toggleAtivo(Long id) {
+        productRepository.toggleAtivo(id);
     }
 
     //Método para gerar o SKU
