@@ -51,7 +51,6 @@ export default function Layout() {
       </aside>
 
       <main className="flex-1 p-8 overflow-y-auto">
-        {/* É aqui que as páginas do router vão aparecer */}
         <Outlet />
       </main>
     </div>
