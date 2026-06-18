@@ -11,7 +11,7 @@ public record ProductDto(
         String nome,
         String descricao,
         UnidadeMedidaDto unidadeMedida,
-        TipoProdutoResumoDto tipoProduto,
+        TipoProdutoDto tipoProduto,
         Integer saldo,
         Boolean ativo,
         LocalDateTime createdAt
