@@ -5,5 +5,5 @@ export type Item = {
   quantity: number;
   price: number;
   type: string;
-  active: boolean;
+  status: boolean;
 };

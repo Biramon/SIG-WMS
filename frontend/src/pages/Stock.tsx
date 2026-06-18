@@ -14,13 +14,11 @@ export default function Stock() {
     if (editingItem) {
       await editProduto(editingItem.id, {
         ...itemData,
-        active: editingItem.active,
       });
       setEditingItem(null);
     } else {
       await addProduto({
         ...itemData,
-        active: true,
       });
     }
   };

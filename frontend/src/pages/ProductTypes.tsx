@@ -16,21 +16,19 @@ export default function ProductTypes() {
       await editProductType(editingType.id, formData);
       setEditingType(null);
     } else {
+      console.log(formData);
       await addProductType({
         ...formData,
-        active: true,
       });
     }
   };
 
-  const handleToggleActive = async (id: string) => {
+  const handleTogglestatus = async (id: string) => {
     const targetType = productTypes.find((type) => type.id === id);
     if (targetType) {
-      await editProductType(id, { active: !targetType.active });
+      await editProductType(id, { status: !targetType.status });
     }
   };
-
-  const handleRemoveType = async () => {};
 
   if (loading && productTypes.length === 0)
     return <div className="text-center py-10">Carregando categorias...</div>;
@@ -50,8 +48,7 @@ export default function ProductTypes() {
       <ProductTypesTable
         types={productTypes}
         onEdit={setEditingType}
-        onToggle={handleToggleActive}
-        onRemove={handleRemoveType}
+        onToggle={handleTogglestatus}
       />
     </div>
   );
