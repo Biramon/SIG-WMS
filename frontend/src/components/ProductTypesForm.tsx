@@ -13,7 +13,7 @@ export default function ProductTypesForm({
   onCancel,
 }: ProductTypesFormProps) {
   const [name, setName] = useState("");
-  const [status, setStatus] = useState<boolean>(false);
+  const [status, setStatus] = useState<boolean>(true);
 
   useEffect(() => {
     if (editingType) {
@@ -21,15 +21,13 @@ export default function ProductTypesForm({
       setStatus(editingType.status);
     } else {
       setName("");
-      setStatus(false);
+      setStatus(true);
     }
   }, [editingType]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
-
-    console.log(status);
 
     onSubmit({
       name: name.trim(),

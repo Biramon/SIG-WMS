@@ -1,95 +1,42 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  NavLink,
-  Navigate,
-  Link,
-} from "react-router-dom";
+// src/App.jsx
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./pages/Layout";
 import Dashboard from "./pages/Dashboard";
 import Stock from "./pages/Stock";
-//import { useState } from "react";
 import ProductTypes from "./pages/ProductTypes";
 
-import { ProdutosProvider } from "./context/ProductContext";
+import { ProductsProvider } from "./context/ProductContext";
 import { ProductTypesProvider } from "./context/ProductTypesContext";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="flex h-screen bg-gray-50 font-sans text-gray-900 select-none">
-        <aside className="w-64 bg-slate-900 text-white flex flex-col shadow-xl">
-          <Link
-            className="p-6 text-2xl font-bold border-b border-slate-800 tracking-wider cursor-pointer select-none"
-            to="/"
-          >
-            📦 SIG-WMS
-          </Link>
-          <nav className="flex-1 p-4 space-y-2">
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                  isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-slate-300 hover:bg-slate-800"
-                }`
-              }
-            >
-              Dashboard
-            </NavLink>
-            <NavLink
-              to="/estoque"
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                  isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-slate-300 hover:bg-slate-800"
-                }`
-              }
-            >
-              Gerenciar Estoque
-            </NavLink>
-            <NavLink
-              to="/product-types"
-              className={({ isActive }) =>
-                `block w-full text-left px-4 py-3 rounded-lg transition-colors ${
-                  isActive
-                    ? "bg-blue-600 text-white"
-                    : "text-slate-300 hover:bg-slate-800"
-                }`
-              }
-            >
-              Tipos de Produto
-            </NavLink>
-          </nav>
-        </aside>
+      <Routes>
+        {/* Rota principal usando o Layout */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<Dashboard />} />
 
-        <main className="flex-1 p-8 overflow-y-auto">
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route
-              path="/estoque"
-              element={
-                <ProdutosProvider>
-                  <ProductTypesProvider>
-                    <Stock />
-                  </ProductTypesProvider>
-                </ProdutosProvider>
-              }
-            />
-            <Route
-              path="/product-types"
-              element={
-                <ProductTypesProvider>
-                  <ProductTypes />
-                </ProductTypesProvider>
-              }
-            />
-          </Routes>
-        </main>
-      </div>
+          <Route
+            path="/estoque"
+            element={
+              <ProductTypesProvider>
+                <ProductsProvider>
+                  <Stock />
+                </ProductsProvider>
+              </ProductTypesProvider>
+            }
+          />
+          <Route
+            path="/product-types"
+            element={
+              <ProductTypesProvider>
+                <ProductTypes />
+              </ProductTypesProvider>
+            }
+          />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

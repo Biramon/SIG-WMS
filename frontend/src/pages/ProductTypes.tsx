@@ -16,7 +16,6 @@ export default function ProductTypes() {
       await editProductType(editingType.id, formData);
       setEditingType(null);
     } else {
-      console.log(formData);
       await addProductType({
         ...formData,
       });

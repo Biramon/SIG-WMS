@@ -41,7 +41,6 @@ export default function StockForm({
     e.preventDefault();
     if (!name || price === "") return;
 
-    console.log(type);
     onSubmit({
       name,
       quantity: Number(quantity),
