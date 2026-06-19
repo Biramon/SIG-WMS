@@ -7,6 +7,7 @@ import br.ufrn.imd.warehouse.persistence.TipoProdutoRepository;
 
 import java.util.List;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +26,16 @@ public class TipoProdutoService {
         return tipoProdutoRepository.save(tipoProduto);
     }
 
+    @Transactional
+    public void toggleAtivo(Long id) {
+        tipoProdutoRepository.toggleAtivo(id);
+    }
+
     public List<TipoProduto> listar() {
         return tipoProdutoRepository.findAll();
     }
-    
+
+    public TipoProduto getById(Long id) {
+        return tipoProdutoRepository.getById(id);
+    }
 }

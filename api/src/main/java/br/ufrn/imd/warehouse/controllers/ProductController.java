@@ -45,6 +45,12 @@ public class ProductController {
         return ResponseEntity.ok(messageUtils.getMessage("success.deleted", "Produto"));
     }
 
+    @PatchMapping("/toggle-ativo/{id}")
+    public ResponseEntity<MessageDto> toggleAtivo(@PathVariable Long id) {
+        productService.toggleAtivo(id);
+        return ResponseEntity.ok(messageUtils.getMessage("success.updated", "Status do produto"));
+    }
+
     @GetMapping("/listar")
     public ResponseEntity<List<ProductDto>> listar() {
         List<Product> products = productService.listar();
