@@ -2,9 +2,13 @@ package br.ufrn.imd.warehouse.domain.dtos;
 
 import java.time.LocalDateTime;
 
-public record TipoProdutoDto(
+public record MovimentacaoDto(
         Long id,
-        String denominacao,
+        int quantidade,
+        String observacao,
+        TipoMovimentacaoDto tipoMovimentacao,
         LocalDateTime createdAt,
         Boolean ativo
-) {}
+) {
+    
+}

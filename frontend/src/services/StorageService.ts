@@ -35,13 +35,14 @@ export const StorageService = {
         id: selectedType ? Number(selectedType.id) : 1,
         denominacao: item.type,
       },
+      preco: item.price,
       saldo: item.quantity,
       ativo: item.status,
     };
 
     try {
       const response = await api.post<any>(
-        "/products/cadastrar",
+        "/products/salvar",
         formattedPayload,
       );
 
