@@ -1,9 +1,11 @@
 package br.ufrn.imd.warehouse.business;
 
 import br.ufrn.imd.warehouse.domain.entities.Product;
+import br.ufrn.imd.warehouse.domain.entities.UnidadeMedida;
 import br.ufrn.imd.warehouse.exceptions.NotFoundException;
 import br.ufrn.imd.warehouse.persistence.ProductRepository;
 
+import java.util.Arrays;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -44,6 +46,10 @@ public class ProductService {
     @Transactional
     public void toggleAtivo(Long id) {
         productRepository.toggleAtivo(id);
+    }
+
+    public List<UnidadeMedida> unidadesMedida() {
+        return Arrays.asList(UnidadeMedida.values());
     }
 
     //Método para gerar o SKU

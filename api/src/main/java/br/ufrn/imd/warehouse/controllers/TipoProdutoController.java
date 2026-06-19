@@ -2,16 +2,19 @@ package br.ufrn.imd.warehouse.controllers;
 
 import br.ufrn.imd.warehouse.business.MessageUtils;
 import br.ufrn.imd.warehouse.business.TipoProdutoService;
+import br.ufrn.imd.warehouse.domain.converters.SigWmsConverter;
 import br.ufrn.imd.warehouse.domain.converters.TipoProdutoConverter;
 import br.ufrn.imd.warehouse.domain.dtos.MessageDto;
 import br.ufrn.imd.warehouse.domain.dtos.ProductDto;
 import br.ufrn.imd.warehouse.domain.dtos.TipoProdutoDto;
+import br.ufrn.imd.warehouse.domain.dtos.UnidadeMedidaDto;
 import br.ufrn.imd.warehouse.domain.entities.Product;
 import br.ufrn.imd.warehouse.domain.entities.TipoProduto;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.ufrn.imd.warehouse.domain.entities.UnidadeMedida;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,9 @@ public class TipoProdutoController {
 
     @Autowired
     private MessageUtils messageUtils;
+
+    @Autowired
+    private SigWmsConverter sigWmsConverter;
 
     @PostMapping("/salvar")
     public ResponseEntity<MessageDto> cadastrar(@RequestBody TipoProdutoDto tipoProdutoDto) {
@@ -55,4 +61,5 @@ public class TipoProdutoController {
         TipoProduto tipoProduto = tipoProdutoService.getById(id);
         return ResponseEntity.ok(tipoProdutoConverter.toDto(tipoProduto));
     }
+
 }
