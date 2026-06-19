@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -18,6 +20,8 @@ public class Product extends AbstractModel {
     private String nome;
 
     private String descricao;
+
+    private BigDecimal preco;
 
     @Enumerated(EnumType.STRING)
     private UnidadeMedida unidadeMedida;

@@ -5,5 +5,6 @@ import java.time.LocalDateTime;
 public record TipoProdutoDto(
         Long id,
         String denominacao,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        boolean ativo
 ) {}

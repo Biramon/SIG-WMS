@@ -16,7 +16,7 @@ public interface AbstractRepository<T extends AbstractModel> extends JpaReposito
     T getById(Long id);
 
     @Query("SELECT e FROM #{#entityName} e WHERE e.ativo = true")
-    List<T> findAll();
+    List<T> findAAlltivos();
 
     @Modifying
     @Transactional

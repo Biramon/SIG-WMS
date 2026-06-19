@@ -5,6 +5,8 @@ import br.ufrn.imd.warehouse.domain.entities.UnidadeMedida;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SigWmsConverter {
 
@@ -16,5 +18,11 @@ public class SigWmsConverter {
     @Named("toDtoUnidadeMedida")
     public UnidadeMedidaDto toDto(UnidadeMedida unidade) {
         return unidade == null ? null : UnidadeMedidaDto.fromEnum(unidade);
+    }
+
+    public List<UnidadeMedidaDto> toDtoList(List<UnidadeMedida> unidades) {
+        return unidades.stream()
+                .map(UnidadeMedidaDto::fromEnum)
+                .toList();
     }
 }
