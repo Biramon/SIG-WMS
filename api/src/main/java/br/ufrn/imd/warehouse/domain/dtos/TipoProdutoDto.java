@@ -6,5 +6,5 @@ public record TipoProdutoDto(
         Long id,
         String denominacao,
         LocalDateTime createdAt,
-        boolean ativo
+        Boolean ativo
 ) {}
