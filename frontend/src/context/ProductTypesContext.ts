@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { ProductType } from "@/types/ProductType";
-import { StorageService } from "../services/api";
+import { StorageService } from "../services/StorageService";
 
 interface ProductTypesContextType {
   productTypes: ProductType[];
@@ -29,33 +29,31 @@ export const ProductTypesProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // 1. Puxa os dados assincronamente da API
   const fetchProductTypes = async () => {
     try {
       setLoading(true);
-      const dadosDoArquivo = StorageService.getProductTypes();
-      setProductTypes(dadosDoArquivo);
+      setError(null);
+      const dadosDaAPI = await StorageService.getProductTypes();
+      setProductTypes(dadosDaAPI);
     } catch {
-      setError("Falha ao ler o arquivo de categorias.");
+      setError("Falha ao ler as categorias do banco.");
     } finally {
       setLoading(false);
     }
   };
 
+  // 2. Adiciona jogando o payload único para a API
   const addProductType = async (novoType: Omit<ProductType, "id">) => {
     try {
       setLoading(true);
-      const dadosAtuais = StorageService.getProductTypes();
+      setError(null);
 
-      const typeComId: ProductType = {
-        ...novoType,
-        id: crypto.randomUUID(),
-      };
+      await StorageService.saveProductTypes(novoType);
 
-      const novaLista = [...dadosAtuais, typeComId];
-      StorageService.saveProductTypes(novaLista);
-      setProductTypes(novaLista);
+      await fetchProductTypes();
     } catch {
-      setError("Erro ao salvar categoria no arquivo.");
+      setError("Erro ao salvar categoria no banco.");
     } finally {
       setLoading(false);
     }
@@ -67,16 +65,19 @@ export const ProductTypesProvider = ({ children }: { children: ReactNode }) => {
   ) => {
     try {
       setLoading(true);
-      const dadosAtuais = StorageService.getProductTypes();
+      setError(null);
 
-      const novaLista = dadosAtuais.map((type) =>
-        type.id === id ? { ...type, ...typeAtualizado } : type,
+      const typeCompletoParaMandar = { id, ...typeAtualizado } as ProductType;
+
+      await StorageService.saveProductTypes(typeCompletoParaMandar);
+
+      setProductTypes((dadosAtuais) =>
+        dadosAtuais.map((type) =>
+          type.id === id ? { ...type, ...typeAtualizado } : type,
+        ),
       );
-
-      StorageService.saveProductTypes(novaLista);
-      setProductTypes(novaLista);
     } catch {
-      setError("Erro ao editar arquivo de categorias.");
+      setError("Erro ao editar a categoria no banco.");
     } finally {
       setLoading(false);
     }

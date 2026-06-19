@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import { Item } from "../types/Item";
-import { StorageService } from "../services/api";
+import { StorageService } from "../services/StorageService";
 
 interface ProductContextType {
   produtos: Item[];
@@ -30,8 +30,8 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
     try {
       setLoading(true);
 
-      const dadosDoArquivo = StorageService.getItems();
-      setProdutos(dadosDoArquivo);
+      const data = await StorageService.getItems();
+      setProdutos(data);
     } catch {
       setError("Falha ao ler o arquivo de produtos.");
     } finally {
@@ -42,20 +42,14 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const addProduto = async (novoItem: Omit<Item, "id">) => {
     try {
       setLoading(true);
-      const dadosAtuais = StorageService.getItems();
 
-      const itemComId: Item = {
-        ...novoItem,
-        id: crypto.randomUUID(),
-      };
+      const produtoCriado = await StorageService.saveItem(novoItem);
 
-      const novaLista = [...dadosAtuais, itemComId];
-
-      StorageService.saveItems(novaLista);
-
-      setProdutos(novaLista);
+      if (produtoCriado) {
+        setProdutos((currData) => [...currData, produtoCriado]);
+      }
     } catch {
-      setError("Erro ao salvar o produto no arquivo.");
+      setError("Erro ao salvar o produto.");
     } finally {
       setLoading(false);
     }
@@ -64,16 +58,17 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const editProduto = async (id: string, itemAtualizado: Partial<Item>) => {
     try {
       setLoading(true);
-      const dadosAtuais = StorageService.getItems();
 
-      const novaLista = dadosAtuais.map((item) =>
-        item.id === id ? { ...item, ...itemAtualizado } : item,
+      const itemCompletoParaMandar = { id, ...itemAtualizado } as Item;
+      await StorageService.saveItem(itemCompletoParaMandar);
+
+      setProdutos((currData) =>
+        currData.map((item) =>
+          item.id === id ? { ...item, ...itemAtualizado } : item,
+        ),
       );
-
-      StorageService.saveItems(novaLista);
-      setProdutos(novaLista);
     } catch {
-      setError("Erro ao editar o arquivo de produtos.");
+      setError("Erro ao editar o produto.");
     } finally {
       setLoading(false);
     }
