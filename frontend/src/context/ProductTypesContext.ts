@@ -29,7 +29,6 @@ export const ProductTypesProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // 1. Puxa os dados assincronamente da API
   const fetchProductTypes = async () => {
     try {
       setLoading(true);
@@ -43,7 +42,6 @@ export const ProductTypesProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // 2. Adiciona jogando o payload único para a API
   const addProductType = async (novoType: Omit<ProductType, "id">) => {
     try {
       setLoading(true);
