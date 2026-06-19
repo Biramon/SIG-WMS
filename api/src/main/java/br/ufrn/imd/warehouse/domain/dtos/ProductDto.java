@@ -1,8 +1,6 @@
 package br.ufrn.imd.warehouse.domain.dtos;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record ProductDto(
@@ -14,5 +12,6 @@ public record ProductDto(
         TipoProdutoDto tipoProduto,
         Integer saldo,
         Boolean ativo,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        BigDecimal preco
 ) {}

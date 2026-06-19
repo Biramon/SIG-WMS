@@ -3,12 +3,15 @@ package br.ufrn.imd.warehouse.controllers;
 import br.ufrn.imd.warehouse.business.MessageUtils;
 import br.ufrn.imd.warehouse.business.ProductService;
 import br.ufrn.imd.warehouse.domain.converters.ProductConverter;
+import br.ufrn.imd.warehouse.domain.converters.SigWmsConverter;
 import br.ufrn.imd.warehouse.domain.dtos.MessageDto;
 import br.ufrn.imd.warehouse.domain.dtos.ProductDto;
+import br.ufrn.imd.warehouse.domain.dtos.UnidadeMedidaDto;
 import br.ufrn.imd.warehouse.domain.entities.Product;
 
 import java.util.List;
 
+import br.ufrn.imd.warehouse.domain.entities.UnidadeMedida;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,8 @@ public class ProductController {
 
     @Autowired
     private MessageUtils messageUtils;
+    @Autowired
+    private SigWmsConverter sigWmsConverter;
 
     @PostMapping("/salvar")
     public ResponseEntity<MessageDto> salvar(@RequestBody ProductDto productDto) {
@@ -55,6 +60,12 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> listar() {
         List<Product> products = productService.listar();
         return ResponseEntity.ok(productConverter.toListDto(products));
+    }
+
+    @GetMapping("/unidades-medida")
+    public ResponseEntity<List<UnidadeMedidaDto>> listarUnidadesMedidas() {
+        List<UnidadeMedida> unidades = productService.unidadesMedida();
+        return ResponseEntity.ok(sigWmsConverter.toDtoList(unidades));
     }
 
 }
