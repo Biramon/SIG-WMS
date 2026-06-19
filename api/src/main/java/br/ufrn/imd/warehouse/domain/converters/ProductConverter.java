@@ -1,7 +1,6 @@
 package br.ufrn.imd.warehouse.domain.converters;
 
 import br.ufrn.imd.warehouse.domain.dtos.ProductDto;
-import br.ufrn.imd.warehouse.domain.dtos.ProductResumoDto;
 import br.ufrn.imd.warehouse.domain.entities.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,8 +15,6 @@ public interface ProductConverter {
 
     @Mapping(target = "unidadeMedida", qualifiedByName = "toDtoUnidadeMedida")
     ProductDto toDto(Product entity);
-
-    ProductResumoDto toResumoDto(Product entity);
 
     List<ProductDto> toListDto(List<Product> entities);
 }

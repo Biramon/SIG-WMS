@@ -26,11 +26,11 @@ public class ProductController {
     @Autowired
     private MessageUtils messageUtils;
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<MessageDto> cadastrar(@RequestBody ProductDto productDto) {
+    @PostMapping("/salvar")
+    public ResponseEntity<MessageDto> salvar(@RequestBody ProductDto productDto) {
         Product product = productConverter.toEntity(productDto);
-        productService.cadastrar(product);
-        return ResponseEntity.ok(messageUtils.getMessage("success.created", "Produto"));
+        productService.salvar(product);
+        return ResponseEntity.ok(messageUtils.getMessage("success.saved", "Produto"));
     }
 
     @GetMapping("/get/{id}")
@@ -43,6 +43,12 @@ public class ProductController {
     public ResponseEntity<MessageDto> desativar(@PathVariable Long id) {
         productService.desativar(id);
         return ResponseEntity.ok(messageUtils.getMessage("success.deleted", "Produto"));
+    }
+
+    @PatchMapping("/toggle-ativo/{id}")
+    public ResponseEntity<MessageDto> toggleAtivo(@PathVariable Long id) {
+        productService.toggleAtivo(id);
+        return ResponseEntity.ok(messageUtils.getMessage("success.updated", "Status do produto"));
     }
 
     @GetMapping("/listar")
