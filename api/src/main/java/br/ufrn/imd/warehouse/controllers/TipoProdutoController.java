@@ -37,10 +37,10 @@ public class TipoProdutoController {
     private SigWmsConverter sigWmsConverter;
 
     @PostMapping("/salvar")
-    public ResponseEntity<MessageDto> cadastrar(@RequestBody TipoProdutoDto tipoProdutoDto) {
+    public ResponseEntity<MessageDto> salvar(@RequestBody TipoProdutoDto tipoProdutoDto) {
         TipoProduto tipoProduto = tipoProdutoConverter.toEntity(tipoProdutoDto);
         tipoProdutoService.salvar(tipoProduto);
-        return ResponseEntity.ok(messageUtils.getMessage("success.created", "Tipo de Produto"));
+        return ResponseEntity.ok(messageUtils.getMessage("success.saved", "Tipo de Produto"));
     }
 
     @GetMapping("/listar")
