@@ -7,6 +7,7 @@ public record MovimentacaoDto(
         int quantidade,
         String observacao,
         TipoMovimentacaoDto tipoMovimentacao,
+        ProductDto product,
         LocalDateTime createdAt,
         Boolean ativo
 ) {

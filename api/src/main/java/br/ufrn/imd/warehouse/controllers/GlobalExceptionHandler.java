@@ -3,6 +3,7 @@ package br.ufrn.imd.warehouse.controllers;
 import br.ufrn.imd.warehouse.business.MessageUtils;
 import br.ufrn.imd.warehouse.domain.dtos.MessageDto;
 import br.ufrn.imd.warehouse.exceptions.AlreadyExistsException;
+import br.ufrn.imd.warehouse.exceptions.InsufficientException;
 import br.ufrn.imd.warehouse.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public MessageDto handleAlreadyExistsException(AlreadyExistsException ex) {
+        return messageUtils.getMessage(ex.getMessage(), ex.getArgs());
+    }
+
+    @ExceptionHandler(InsufficientException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public MessageDto handleInsufficientException(InsufficientException ex) {
         return messageUtils.getMessage(ex.getMessage(), ex.getArgs());
     }
 }
