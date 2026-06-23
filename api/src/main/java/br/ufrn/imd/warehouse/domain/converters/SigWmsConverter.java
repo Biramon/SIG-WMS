@@ -37,4 +37,10 @@ public class SigWmsConverter {
     public TipoMovimentacaoDto toDto(TipoMovimentacao tipo) {
         return tipo == null ? null : TipoMovimentacaoDto.fromEnum(tipo);
     }
+
+    public List<TipoMovimentacaoDto> toTipoMovimentacaoDtoList(List<TipoMovimentacao> tipos) {
+        return tipos == null ? null : tipos.stream()
+                .map(TipoMovimentacaoDto::fromEnum)
+                .toList();
+    }
 }
