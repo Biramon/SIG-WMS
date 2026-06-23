@@ -17,8 +17,6 @@ export default function StockForm({
   const [quantity, setQuantity] = useState<number | "">("");
   const [price, setPrice] = useState<number | "">("");
   const [type, setType] = useState("");
-  const [unity, setUnity] = useState("");
-  const [description, setDescription] = useState("");
   const [status, setStatus] = useState<boolean>(false);
 
   const { productTypes, loading } = useProductTypes();
@@ -29,16 +27,12 @@ export default function StockForm({
       setQuantity(editingItem.quantity);
       setPrice(editingItem.price);
       setType(editingItem.type);
-      setUnity(editingItem.unity);
-      setDescription(editingItem.description);
       setStatus(editingItem.status);
     } else {
       setName("");
       setQuantity("");
       setPrice("");
       setType("");
-      setUnity("");
-      setDescription("");
       setStatus(true);
     }
   }, [editingItem]);
@@ -46,8 +40,6 @@ export default function StockForm({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || price === "") return;
-
-    console.log(unity, description);
 
     onSubmit({
       name,
@@ -64,8 +56,6 @@ export default function StockForm({
       setQuantity("");
       setPrice("");
       setType("");
-      setUnity("");
-      setDescription("");
       setStatus(true);
     }
   };
@@ -116,22 +106,6 @@ export default function StockForm({
                     {productType.name}
                   </option>
                 ))}
-          </select>
-        </div>
-
-        <div className="w-40">
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Unidade de medida
-          </label>
-          <select
-            required
-            className={`w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white`}
-            value={unity}
-            onChange={(e) => setUnity(e.target.value)}
-          >
-            <option value="">Selecione...</option>
-
-            <option value={"UNIDADE"}>UNIDADE</option>
           </select>
         </div>
 

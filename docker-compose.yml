@@ -39,7 +39,7 @@ services:
     container_name: sig-wms-frontend
     restart: unless-stopped
     ports:
-      - "5174:5173"
+      - "5174:80"
     depends_on:
       - backend
     volumes:
