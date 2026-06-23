@@ -14,21 +14,12 @@ export default function Stock() {
     if (editingItem) {
       await editProduto(editingItem.id, {
         ...itemData,
-        active: editingItem.active,
       });
       setEditingItem(null);
     } else {
       await addProduto({
         ...itemData,
-        active: true,
       });
-    }
-  };
-
-  const handleToggle = async (id: string) => {
-    const itemAtual = produtos.find((item) => item.id === id);
-    if (itemAtual) {
-      await editProduto(id, { active: !itemAtual.active });
     }
   };
 
@@ -47,11 +38,7 @@ export default function Stock() {
         onCancel={() => setEditingItem(null)}
       />
 
-      <StockTable
-        items={produtos}
-        onEdit={(item) => setEditingItem(item)}
-        onToggle={handleToggle}
-      />
+      <StockTable items={produtos} onEdit={(item) => setEditingItem(item)} />
     </div>
   );
 }

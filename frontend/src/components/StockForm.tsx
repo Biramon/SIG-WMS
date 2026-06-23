@@ -17,6 +17,7 @@ export default function StockForm({
   const [quantity, setQuantity] = useState<number | "">("");
   const [price, setPrice] = useState<number | "">("");
   const [type, setType] = useState("");
+  const [status, setStatus] = useState<boolean>(false);
 
   const { productTypes, loading } = useProductTypes();
 
@@ -26,24 +27,26 @@ export default function StockForm({
       setQuantity(editingItem.quantity);
       setPrice(editingItem.price);
       setType(editingItem.type);
+      setStatus(editingItem.status);
     } else {
       setName("");
       setQuantity("");
       setPrice("");
       setType("");
+      setStatus(true);
     }
   }, [editingItem]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || quantity === "" || price === "") return;
+    if (!name || price === "") return;
 
     onSubmit({
       name,
       quantity: Number(quantity),
       price: Number(price),
       type: type,
-      active: true,
+      status: status,
     });
 
     if (!editingItem) {
@@ -51,6 +54,7 @@ export default function StockForm({
       setQuantity("");
       setPrice("");
       setType("");
+      setStatus(true);
     }
   };
 
@@ -93,30 +97,15 @@ export default function StockForm({
 
             {!loading &&
               productTypes
-                .filter((productType) => productType.active === true)
+                .filter((productType) => productType.status === true)
                 .map((productType) => (
-                  <option key={productType.id} value={productType.id}>
+                  <option key={productType.id} value={productType.name}>
                     {productType.name}
                   </option>
                 ))}
           </select>
         </div>
 
-        <div className="w-32">
-          <label className="block text-sm font-medium text-slate-700 mb-1">
-            Quantidade
-          </label>
-          <input
-            type="number"
-            min="0"
-            required
-            className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            value={quantity}
-            onChange={(e) =>
-              setQuantity(e.target.value ? Number(e.target.value) : "")
-            }
-          />
-        </div>
         <div className="w-40">
           <label className="block text-sm font-medium text-slate-700 mb-1">
             Preço (R$)
@@ -132,6 +121,24 @@ export default function StockForm({
               setPrice(e.target.value ? Number(e.target.value) : "")
             }
           />
+        </div>
+
+        <div className="w-32">
+          <label className="block text-sm font-medium text-slate-700 mb-1">
+            Status
+          </label>
+          <label className="relative inline-flex items-center cursor-pointer select-none">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={status}
+              onChange={(e) => setStatus(e.target.checked)}
+            />
+            <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            <span className="ms-3 text-sm font-medium text-slate-900">
+              {status ? "Ativo" : "Desativado"}
+            </span>
+          </label>
         </div>
 
         <button

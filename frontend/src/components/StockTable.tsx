@@ -4,10 +4,9 @@ import { StockTableRow } from "./StockTableRow";
 interface StockTableProps {
   items: Item[];
   onEdit: (item: Item) => void;
-  onToggle: (id: string) => void;
 }
 
-export function StockTable({ items, onEdit, onToggle }: StockTableProps) {
+export function StockTable({ items, onEdit }: StockTableProps) {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       <table className="w-full text-left border-collapse">
@@ -17,8 +16,8 @@ export function StockTable({ items, onEdit, onToggle }: StockTableProps) {
             <th className="p-4 font-semibold">Qtd.</th>
             <th className="p-4 font-semibold">Preço Unitário</th>
             <th className="p-4 font-semibold">Tipo</th>
-            <th className="p-4 font-semibold text-right">Ações</th>
             <th className="p-4 font-semibold text-right">Status</th>
+            <th className="p-4 font-semibold text-right">Ações</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-200">
@@ -30,12 +29,7 @@ export function StockTable({ items, onEdit, onToggle }: StockTableProps) {
             </tr>
           ) : (
             items.map((item) => (
-              <StockTableRow
-                key={item.id}
-                item={item}
-                onEdit={onEdit}
-                onToggle={onToggle}
-              />
+              <StockTableRow key={item.id} item={item} onEdit={onEdit} />
             ))
           )}
         </tbody>

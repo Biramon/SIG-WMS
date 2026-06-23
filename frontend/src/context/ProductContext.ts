@@ -8,7 +8,7 @@ import React, {
 import { Item } from "../types/Item";
 import { StorageService } from "../services/api";
 
-interface ProdutosContextType {
+interface ProductContextType {
   produtos: Item[];
   loading: boolean;
   error: string | null;
@@ -17,11 +17,11 @@ interface ProdutosContextType {
   editProduto: (id: string, itemAtualizado: Partial<Item>) => Promise<void>;
 }
 
-export const ProdutosContext = createContext<ProdutosContextType | undefined>(
+export const ProductContext = createContext<ProductContextType | undefined>(
   undefined,
 );
 
-export const ProdutosProvider = ({ children }: { children: ReactNode }) => {
+export const ProductsProvider = ({ children }: { children: ReactNode }) => {
   const [produtos, setProdutos] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -84,7 +84,7 @@ export const ProdutosProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return React.createElement(
-    ProdutosContext.Provider,
+    ProductContext.Provider,
     {
       value: {
         produtos,
@@ -99,8 +99,8 @@ export const ProdutosProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const useProdutos = (): ProdutosContextType => {
-  const context = useContext(ProdutosContext);
+export const useProdutos = (): ProductContextType => {
+  const context = useContext(ProductContext);
   if (!context)
     throw new Error("useProdutos deve ser usado dentro de um ProdutosProvider");
   return context;

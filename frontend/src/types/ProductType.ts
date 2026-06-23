@@ -1,5 +1,5 @@
 export interface ProductType {
   id: string;
   name: string;
-  active: boolean;
+  status: boolean;
 }
