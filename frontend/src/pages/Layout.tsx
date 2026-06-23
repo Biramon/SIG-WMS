@@ -24,7 +24,7 @@ export default function Layout() {
             Dashboard
           </NavLink>
           <NavLink
-            to="/estoque"
+            to="/stock"
             className={({ isActive }) =>
               `block w-full text-left px-4 py-3 rounded-lg transition-colors ${
                 isActive
@@ -46,6 +46,18 @@ export default function Layout() {
             }
           >
             Tipos de Produto
+          </NavLink>
+          <NavLink
+            to="/movements"
+            className={({ isActive }) =>
+              `block w-full text-left px-4 py-3 rounded-lg transition-colors ${
+                isActive
+                  ? "bg-blue-600 text-white"
+                  : "text-slate-300 hover:bg-slate-800"
+              }`
+            }
+          >
+            Movimentações do estoque
           </NavLink>
         </nav>
       </aside>
