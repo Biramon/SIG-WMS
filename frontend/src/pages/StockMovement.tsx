@@ -36,7 +36,7 @@ export default function StockMovement() {
     },
     {
       header: "Produto",
-      accessor: (mov) => mov.produto?.nome,
+      accessor: (mov) => (mov.produto as any)?.nome ?? "Produto não informado",
     },
     {
       header: "Qtd",
