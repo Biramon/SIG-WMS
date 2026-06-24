@@ -1,7 +1,9 @@
 package br.ufrn.imd.warehouse.domain.converters;
 
 import br.ufrn.imd.warehouse.domain.dtos.UnidadeMedidaDto;
+import br.ufrn.imd.warehouse.domain.dtos.TipoMovimentacaoDto;
 import br.ufrn.imd.warehouse.domain.entities.UnidadeMedida;
+import br.ufrn.imd.warehouse.domain.entities.TipoMovimentacao;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,22 @@ public class SigWmsConverter {
     public List<UnidadeMedidaDto> toDtoList(List<UnidadeMedida> unidades) {
         return unidades.stream()
                 .map(UnidadeMedidaDto::fromEnum)
+                .toList();
+    }
+
+    @Named("toEntityTipoMovimentacao")
+    public TipoMovimentacao toEntity(TipoMovimentacaoDto dto) {
+        return dto == null ? null : dto.toEnum();
+    }
+
+    @Named("toDtoTipoMovimentacao")
+    public TipoMovimentacaoDto toDto(TipoMovimentacao tipo) {
+        return tipo == null ? null : TipoMovimentacaoDto.fromEnum(tipo);
+    }
+
+    public List<TipoMovimentacaoDto> toTipoMovimentacaoDtoList(List<TipoMovimentacao> tipos) {
+        return tipos == null ? null : tipos.stream()
+                .map(TipoMovimentacaoDto::fromEnum)
                 .toList();
     }
 }
