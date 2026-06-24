@@ -18,7 +18,7 @@ export function StockTableRow({ item, onEdit }: StockTableRowProps) {
     >
       <td className="p-4 font-medium text-slate-800">{item.name}</td>
       <td className="p-4 text-slate-600">
-        <StockBadge quantity={item.quantity} />
+        <StockBadge quantity={item.quantity} unity={item.unity} />
       </td>
       <td className="p-4 text-slate-600">{formattedPrice}</td>
       <td className="p-4 text-slate-600">{item.type}</td>

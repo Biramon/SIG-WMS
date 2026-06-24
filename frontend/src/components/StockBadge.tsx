@@ -1,8 +1,9 @@
 interface StockBadgeProps {
   quantity: number;
+  unity: string;
 }
 
-export function StockBadge({ quantity }: StockBadgeProps) {
+export function StockBadge({ quantity, unity }: StockBadgeProps) {
   const isLowStock = quantity < 10;
 
   return (
@@ -11,7 +12,7 @@ export function StockBadge({ quantity }: StockBadgeProps) {
         isLowStock ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
       }`}
     >
-      {quantity} un
+      {quantity} {unity}
     </span>
   );
 }
