@@ -34,7 +34,10 @@ export default function StockMovement() {
         </span>
       ),
     },
-    { header: "Produto (ID)", accessor: "produtoId" },
+    {
+      header: "Produto",
+      accessor: (mov) => mov.produto?.nome,
+    },
     {
       header: "Qtd",
       accessor: "quantidade",

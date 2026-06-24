@@ -26,12 +26,18 @@ public class MovimentacaoService {
     @Transactional
     public Movimentacao salvar(Movimentacao movimentacao) {
         Product product = movimentacao.getProduct();
+        if (product == null || product.getId() == null) {
+            throw new IllegalArgumentException("Produto inválido ou ID ausente");
+        }
 
-        atualizarSaldo(product, movimentacao);
+        Product persistedProduct = productRepository.findById(product.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado: " + product.getId()));
 
-        productRepository.save(product);
+        atualizarSaldo(persistedProduct, movimentacao);
 
-        movimentacao.setProduct(product);
+        productRepository.save(persistedProduct);
+
+        movimentacao.setProduct(persistedProduct);
         return movimentacaoRepository.save(movimentacao);
     }
 
@@ -45,7 +51,7 @@ public class MovimentacaoService {
 
     private void atualizarSaldo(Product product, Movimentacao movimentacao) {
 
-        int saldoAtual = product.getSaldo();
+        int saldoAtual = product.getSaldo() != null ? product.getSaldo() : 0;
         int qtdMovimentacao = movimentacao.getQuantidade();
         TipoMovimentacao tipo = movimentacao.getTipoMovimentacao();
 

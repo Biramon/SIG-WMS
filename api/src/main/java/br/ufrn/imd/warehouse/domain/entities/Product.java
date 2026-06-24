@@ -30,5 +30,5 @@ public class Product extends AbstractModel {
     @JoinColumn(name = "tipo_produto_id")
     private TipoProduto tipoProduto;
 
-    private Integer saldo;
+    private Integer saldo = 0;
 }
