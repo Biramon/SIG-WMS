@@ -43,10 +43,9 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./frontend:/app # Espelha seu código local para dentro do container
-      - /app/node_modules # "Anonymous volume" para o Docker usar o node_modules interno do container (evita conflitos de SO)
+      - ./frontend:/app
+      - /app/node_modules
     environment:
-      - CHOKIDAR_USEPOLLING=true # CRUCIAL para sistemas Windows/WSL detectarem alterações de arquivo
-
+      - CHOKIDAR_USEPOLLING=true
 volumes:
   postgres_data:
