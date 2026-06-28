@@ -8,18 +8,18 @@ export default function MovementOut() {
   const { addMovimentacao } = useMovimentacoes();
   const { produtos, loading: loadingProdutos } = useProdutos();
 
-  const [produtoId, setProdutoId] = useState("");
+  const [produto, setProduto] = useState("");
   const [quantidade, setQuantidade] = useState<number | "">("");
   const [motivo, setMotivo] = useState("");
   const [observacao, setObservacao] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const produtoSelecionado = produtos.find((p) => p.id === produtoId);
+  const produtoSelecionado = produtos.find((p) => p.id === produto);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!produtoId || !quantidade || quantidade <= 0) {
+    if (!produto || !quantidade || quantidade <= 0) {
       alert("Preencha o produto e uma quantidade válida.");
       return;
     }
@@ -39,7 +39,7 @@ export default function MovementOut() {
     setIsSubmitting(true);
     try {
       await addMovimentacao({
-        produtoId,
+        produto: produtoSelecionado,
         quantidade: Number(quantidade),
         tipo: "saida",
         motivo: motivo || "Saída manual",
@@ -70,8 +70,8 @@ export default function MovementOut() {
         <div className="flex flex-col gap-1">
           <label className="font-semibold text-gray-700">Produto *</label>
           <select
-            value={produtoId}
-            onChange={(e) => setProdutoId(e.target.value)}
+            value={produto}
+            onChange={(e) => setProduto(e.target.value)}
             className="border p-2 rounded-md bg-white"
             required
             disabled={loadingProdutos}
@@ -106,7 +106,7 @@ export default function MovementOut() {
             className="border p-2 rounded-md focus:border-red-500 focus:ring-1 focus:ring-red-500"
             placeholder="Ex: 10"
             required
-            disabled={!produtoId}
+            disabled={!produto}
           />
         </div>
 
@@ -143,7 +143,7 @@ export default function MovementOut() {
           </button>
           <button
             type="submit"
-            disabled={isSubmitting || !produtoId}
+            disabled={isSubmitting || !produto}
             className="bg-red-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-red-700 transition-colors disabled:opacity-50"
           >
             {isSubmitting ? "Salvando..." : "Confirmar Saída"}

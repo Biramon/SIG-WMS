@@ -48,12 +48,12 @@ export const MovementProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
       setError(null);
 
-      const movimentacaoCriada =
-        await MovementService.saveMovement(novaMovimentacao);
-
-      if (movimentacaoCriada) {
-        setMovimentacoes((currData) => [...currData, movimentacaoCriada]);
-      }
+      // novaMovimentacao doesn't include an id (server generates it). Cast to
+      // StockMovement to satisfy the service signature.
+      await MovementService.saveMovement(
+        novaMovimentacao as unknown as StockMovement,
+      );
+      await fetchMovimentacoes();
     } catch {
       setError("Erro ao salvar a movimentação.");
     } finally {
