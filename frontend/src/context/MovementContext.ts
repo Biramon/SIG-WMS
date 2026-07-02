@@ -48,8 +48,6 @@ export const MovementProvider = ({ children }: { children: ReactNode }) => {
       setLoading(true);
       setError(null);
 
-      // novaMovimentacao doesn't include an id (server generates it). Cast to
-      // StockMovement to satisfy the service signature.
       await MovementService.saveMovement(
         novaMovimentacao as unknown as StockMovement,
       );
